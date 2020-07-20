@@ -50,4 +50,6 @@ public class SessionManager extends Application {
     public boolean checkLoginStatus(){
         return spref.getBoolean(KEY_LOGIN_STATUS, false);
     }
+
+    public String getMail() { return spref.getString(KEY_EMAIL, "default"); }
 }
