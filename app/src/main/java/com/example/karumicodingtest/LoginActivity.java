@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         // Getting text fields' ids
-        emailText = (EditText) findViewById(R.id.editTextTextEmailAddress);
+        emailText = (EditText) findViewById(R.id.editTextEmailAddress);
         passText = (EditText) findViewById(R.id.editTextPassword);
 
         // Setting the log in button listener
