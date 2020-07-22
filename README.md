@@ -16,7 +16,7 @@ The entire app was made using Android Studio 4.0.1. All coding was made in Java.
 
 You can try this app on any Android device with version 4.1 or higher. Just [download the apk package](https://github.com/iripatx/KarumiTestAndroid/releases/latest) and install it. You may have to enable the *Allow installation from unknown sources* option.
 
-If you don't have a devices with such specifications, you can also run it on the Android Studio's Emulator. Learn how to set it up [here](https://developer.android.com/studio/run/emulator).
+If you don't have a device with such specifications, you can also run it on the Android Studio's Emulator. Learn how to set it up [here](https://developer.android.com/studio/run/emulator).
 
 
 ## Usage guide
