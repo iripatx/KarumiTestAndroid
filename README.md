@@ -23,7 +23,7 @@ If you don't have a devices with such specifications, you can also run it on the
 
 Once the app is opened, you can introduce an email and a password in the designated fields, then press login to access. 
 
-You can access the app as **test@karumi.com** with the password **potato**. 
+You can access the app as **test@karumi**.**com** with the password **potato**. 
 
 
 ## Contact
@@ -35,3 +35,7 @@ Francisco Javier (Patxi) Iriarte Satrústegui
 
 ## Other tools/Acknowledgements
 * [Mocky](https://designer.mocky.io/) for providing an easy to set up fake API
+
+
+## Note for the reviewers
+As you will be able to see in the project's issues, I was not able to enforce or even check code coverage for this project. I am aware this is a significant shortcoming. This aspect of programming is totally new to me and, while I consider myself a good self-teacher, I didn't manage to learn it by myself, at least in the time I dedicated to it. I also want this to be a transparent work, and I don't want to look like I know something I don't. I'd be happy to learn what is needed, but I understand that this is one of the requirements and it has not been met.
