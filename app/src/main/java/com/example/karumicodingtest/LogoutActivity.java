@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 public class LogoutActivity extends AppCompatActivity {
 
+    // Attributes
     SessionManager manager;
 
     @Override
@@ -36,11 +37,16 @@ public class LogoutActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Deletes session data and returns to the login screen
+     */
     private void logout(){
-        // Delete session data and return to the login screen
+        // Deleting data
         manager.deleteSession();
+        // Changing to the login activity
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+        // Killing this activity
         finish();
     }
 }

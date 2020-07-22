@@ -46,21 +46,21 @@ public class LoginActivity extends AppCompatActivity {
         // Before loading the view the session token is checked, in case the user is already logged in
         manager = new SessionManager(this);
 
-        // If already logged in, change to the Logout activity
+        // If already logged in, change to the logout activity
         if (manager.checkLoginStatus()){
             Intent intent = new Intent(this, LogoutActivity.class);
             startActivity(intent);
+            // Killing this activity
             finish();
         }
-        // If not, start the login process
-
+        // If not, load the view and start the login process
         setContentView(R.layout.activity_login);
 
         // Getting text fields' ids
         emailText = (EditText) findViewById(R.id.editTextEmailAddress);
         passText = (EditText) findViewById(R.id.editTextPassword);
 
-        // Setting the log in button listener
+        // Setting the login button listener
         loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -73,14 +73,10 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void login(String email){
-        // Creating and storing session
-        manager.createSession(email);
-        Intent intent = new Intent(this, LogoutActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
+    /**
+     * Connects to a fake API to check the user's inputs with the true credentials, initiating the
+     * login process if the user is right.
+     */
     private void checkCredentials(){
         // Getting inputs
         final String email = emailText.getText().toString();
@@ -91,41 +87,41 @@ public class LoginActivity extends AppCompatActivity {
 
         // Creating request
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null,
-            new Response.Listener<JSONObject>(){
-                @Override
+                new Response.Listener<JSONObject>(){
 
-                // onResponse will be called if the app succesfully connects to the API and receives the JSON
-                public void onResponse(JSONObject response){
-                    try {
-                        // Getting the user info table
-                        JSONArray jsonArray = response.getJSONArray("User Info");
-                        // Only the first (and only) element is required
-                        JSONObject userinfo = jsonArray.getJSONObject(0);
-                        // Retrieving credentials
-                        String APIemail = userinfo.getString("email");
-                        String APIpass = userinfo.getString("pass");
+                    // onResponse will be called if the app succesfully connects to the API and receives the JSON
+                    @Override
+                    public void onResponse(JSONObject response){
+                        try {
+                            // Getting the user info table
+                            JSONArray jsonArray = response.getJSONArray("User Info");
+                            // Only the first (and only) element is required
+                            JSONObject userinfo = jsonArray.getJSONObject(0);
+                            // Retrieving credentials
+                            String APIemail = userinfo.getString("email");
+                            String APIpass = userinfo.getString("pass");
 
-                        // Checking credentials
-                        if (APIemail.equals(email) && APIpass.equals(pass)){
-                            // If credentials are true, start the login process
-                            login(email);
-                        }else{
-                            //If not, prompt a message and delete pass field
-                            passText.setText("");
-                            Toast.makeText(LoginActivity.this, "Incorrect mail or password", Toast.LENGTH_SHORT).show();
+                            // Checking credentials
+                            if (APIemail.equals(email) && APIpass.equals(pass)){
+                                // If credentials are true, start the login process
+                                login(email);
+                            }else{
+                                //If not, prompt a message and delete pass field
+                                passText.setText("");
+                                Toast.makeText(LoginActivity.this, "Incorrect mail or password", Toast.LENGTH_SHORT).show();
+                                // Unlocking the button to allow more attempts
+                                loginButton.setEnabled(true);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                             // Unlocking the button to allow more attempts
                             loginButton.setEnabled(true);
                         }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        // Unlocking the button to allow more attempts
-                        loginButton.setEnabled(true);
                     }
-                }
-            }, new Response.ErrorListener(){
-            @Override
+                }, new Response.ErrorListener(){
 
-            // onErrorResponse
+            // onErrorResponse will be called if the app can't connect to the API, or if the API returns an error
+            @Override
             public void onErrorResponse(VolleyError error){
                 error.printStackTrace();
                 Toast.makeText(LoginActivity.this, "API error", Toast.LENGTH_SHORT).show();
@@ -140,4 +136,19 @@ public class LoginActivity extends AppCompatActivity {
         // Blocking button to avoid multiple requests
         loginButton.setEnabled(false);
     }
+
+    /**
+     * Creates and stores session information, then transitions the app to the logout page.
+     * @param email User's E-mail
+     */
+    private void login(String email){
+        // Creating and storing session
+        manager.createSession(email);
+        // Changing to the logout activity
+        Intent intent = new Intent(this, LogoutActivity.class);
+        startActivity(intent);
+        // Killing this activity
+        finish();
+    }
+
 }
